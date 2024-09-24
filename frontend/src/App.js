@@ -1,29 +1,31 @@
 import './App.css';
 import Header from "./components/Header";
-import { useEffect, useState } from 'react';
-import instance from './axios';
 
 import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from './axios'
+
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Join from './pages/Join';
 
 function App() {
 
-  const [user, setUser] = useState();
-  const [sInfo, setSInfo] = useState();
-
-  const getSession = async () => {
-    // console.log("세션 호출 !");
-    const res = await instance.get("/getSession");
-    // console.log("getSession res :", res.data);
-  }
+  const [list, setList] = useState([]);
 
   useEffect(() => {
-    getSession();
-    console.log(JSON.parse(sessionStorage.getItem("info")));
-    setSInfo(JSON.parse(sessionStorage.getItem("info")));
-  }, [user]);
+    // 본인의 고유한 주소를 가지고 있는 데이터를 가져다 쓰겠다 ?
+    // => axios 로 요청
+    // => useEffect 를 사용
+    let url = "/projectList.json"
+
+    axios.get(url)
+      .then(res => {
+        console.log("axios res :", res.data.list);
+        setList(res.data.list)
+      })
+      .catch(err => console.error(err))
+  }, [])
+  console.log(list);
+  
 
 
   return (
@@ -32,8 +34,6 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />}></Route>
-        <Route path='/login' element={<Login setUser={setUser} />}></Route>
-        <Route path='/join' element={<Join />}></Route>
       </Routes>
     </div>
   );

@@ -5,14 +5,7 @@ const Header = () => {
     return (
         <header className="home-header">
             <div className='header-content'>
-                <div className="logo">Kim's Page</div>
-                <nav>
-                    <ul>
-                        <li><Link to="/">HOME</Link></li>
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/join">Sing Up</Link></li>
-                    </ul>
-                </nav>
+                <Link to="/" style={{ textDecoration: "none" }}><div className="logo">Kim's Page</div></Link>
             </div>
 
         </header>
